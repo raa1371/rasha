@@ -1,207 +1,122 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>نمایش مناقصات و مزایده‌ها</title>
-    <style>
-        @font-face {
-            font-family: 'IRANSans';
-            src: url('https://cdn.fontcdn.ir/Font/Persian/IRANSans/IRANSans.woff2') format('woff2');
-        }
-
-        body {
-            font-family: "IRANSans", "Vazir", sans-serif;
-            background: #f4f7f9;
-            margin: 0;
-            padding: 0;
-        }
-
-        .top-banner {
-            text-align: center;
-            padding: 20px 10px 5px 10px;
-            background-color: #ffffff;
-        }
-
-        .top-banner img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .top-banner p {
-            font-size: 20px;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .tabs {
-            max-width: 1200px;
-            margin: 10px auto 30px auto;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .tab-buttons {
-            display: flex;
-            background: #2c3e50;
-        }
-
-        .tab-buttons button {
-            flex: 1;
-            padding: 15px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .tab-buttons button:hover,
-        .tab-buttons button.active {
-            background: #2980b9;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 0;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fade 0.5s ease-in-out;
-        }
-
-        @keyframes fade {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            padding-top: 60%;
-        }
-
-        .iframe-container iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            border-radius: 0 0 15px 15px;
-        }
-
-        .rss-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 20px;
-            list-style: none;
-            margin: 0;
-        }
-
-        .rss-grid li {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .rss-grid li:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .rss-grid li a {
-            color: #2980b9;
-            font-size: 16px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .rss-grid li a:hover {
-            color: #1abc9c;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سامانه شرکت‌های فولادی</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=IRANSans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'IRANSans', sans-serif;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+  </style>
 </head>
-<body>
-
-<div class="top-banner">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOTDcbq3jyDbfLY-fjCwf2Ro-82w3QDNi58A&s" alt="بنر سایت">
-    <p>سامانه برخط و هوشمند شرکت دانش‌بنیان کاوشگران صنایع معدنی راشا</p>
-</div>
-
-<div class="tabs">
-    <div class="tab-buttons">
-        <button class="active" onclick="showTab(0)">توسعه آهن و فولاد گل گهر</button>
-        <button onclick="showTab(1)">نظم‌آوران صنعت و معدن</button>
-        <button onclick="showTab(2)">معدنی و صنعتی گل گهر</button>
-        <button onclick="showTab(3)">جهان فولاد سیرجان</button>
+<body class="bg-gray-100 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow p-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4 space-x-reverse">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOTDcbq3jyDbfLY-fjCwf2Ro-82w3QDNi58A&s" alt="لوگو" class="h-12 w-auto" />
+      <h1 class="text-xl font-bold text-gray-800">سامانه برخط و هوشمند شرکت دانش‌بنیان کاوشگران صنایع معدنی راشا</h1>
     </div>
+  </header>
 
-    <div class="tab-content active">
-        <div class="iframe-container">
-            <iframe src="https://rss.app/embed/v1/wall/aA42rwKXEWd8ch4p"></iframe>
-        </div>
-    </div>
+  <!-- Main layout -->
+  <div class="flex">
+    <!-- Sidebar Tabs -->
+    <aside class="w-64 bg-white shadow-md h-screen overflow-y-auto">
+      <ul id="companyTabs" class="divide-y divide-gray-200">
+        <!-- Tabs will be inserted by JavaScript -->
+      </ul>
+    </aside>
 
-    <div class="tab-content">
-        <div class="iframe-container">
-            <iframe src="https://rss.app/embed/v1/wall/6OkRAZrf6Irr784b"></iframe>
-        </div>
-    </div>
+    <!-- Content Area -->
+    <main class="flex-1 p-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" id="subTabs">
+        <button onclick="showContent('tender')" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">مناقصه</button>
+        <button onclick="showContent('auction')" class="bg-green-500 text-white p-2 rounded hover:bg-green-600">مزایده</button>
+        <button onclick="showContent('research')" class="bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600">اولویت‌های پژوهشی</button>
+      </div>
+      <div id="rssContent" class="bg-white p-4 rounded shadow">
+        <p class="text-gray-500">لطفاً یک بخش را انتخاب کنید.</p>
+      </div>
+    </main>
+  </div>
 
-    <div class="tab-content" id="tab3-content">
-        <ul id="rss-items" class="rss-grid"></ul>
-    </div>
+  <script>
+    const companies = [
+      "جهان فولاد سیرجان",
+      "فولاد مبارکه",
+      "فولاد هرمزگان",
+      "گهرزمین",
+      "گل گهر",
+      "صنایع معدنی فولاد سنگان",
+      "توسعه آهن و فولاد گل‌گهر",
+      "فولاد خوزستان",
+      "ذوب آهن اصفهان",
+      "صنایع فولاد آلیاژی پاسارگاد",
+      "صبانور",
+      "پارس فولاد سبزوار",
+      "فولاد خراسان",
+      "فولاد مشیز بردسیر",
+      "فولاد آلیاژی ایران",
+      "فولاد غدیر نی‌ریز",
+      "فولاد بوتیای ایرانیان",
+      "معدنی نوظهور کویر بافق",
+      "فولاد ارفع",
+      "شرکت فولاد آذربایجان",
+      "فولاد کاوه جنوب کیش",
+      "فولاد سفید دشت",
+      "فولاد شادگان",
+      "توسعه فراگیر سناباد",
+      "چادرملو",
+      "آهن و فولاد غدیر ایرانیان",
+      "فولاد سیرجان ایرانیان",
+      "فولاد جهان آرا اروند",
+      "فولاد زرند ایرانیان"
+    ];
 
-    <div class="tab-content">
-        <div class="iframe-container">
-            <iframe src="https://rss.app/embed/v1/wall/qV1XHOAGs2gooWK7"></iframe>
-        </div>
-    </div>
-</div>
+    const rssFeeds = {
+      "جهان فولاد سیرجان": {
+        tender: "https://rss.app/embed/v1/wall/THrhFKGVrluPWk22",
+        auction: "https://rss.app/embed/v1/wall/9GoySwGjn2Azdshr",
+        research: "https://rss.app/embed/v1/wall/GtcNc3FREZKON08J"
+      },
+      "فولاد هرمزگان": {
+        tender: "https://rss.app/embed/v1/wall/PatY1f2zt7LDRBHy",
+        auction: "https://rss.app/embed/v1/wall/PatY1f2zt7LDRBHy"
+      }
+      // سایر شرکت‌ها را به همین روش اضافه کن
+    };
 
-<script>
-    function showTab(index) {
-        const buttons = document.querySelectorAll('.tab-buttons button');
-        const contents = document.querySelectorAll('.tab-content');
-        buttons.forEach((btn, i) => {
-            btn.classList.toggle('active', i === index);
-            contents[i].classList.toggle('active', i === index);
-        });
+    let currentCompany = "";
 
-        if (index === 2 && !document.getElementById('rss-items').children.length) {
-            loadRSS();
-        }
+    const companyTabs = document.getElementById("companyTabs");
+
+    companies.forEach((company) => {
+      const li = document.createElement("li");
+      li.className = "p-4 hover:bg-gray-100 cursor-pointer";
+      li.textContent = company;
+      li.onclick = () => {
+        currentCompany = company;
+        document.getElementById("rssContent").innerHTML = `<h2 class='text-lg font-semibold mb-2'>${company}</h2><p class='text-gray-500'>لطفاً یکی از بخش‌های بالا را انتخاب کنید.</p>`;
+      };
+      companyTabs.appendChild(li);
+    });
+
+    function showContent(type) {
+      if (!currentCompany || !rssFeeds[currentCompany] || !rssFeeds[currentCompany][type]) {
+        document.getElementById("rssContent").innerHTML = `<p class='text-red-500'>برای این بخش محتوایی موجود نیست.</p>`;
+        return;
+      }
+      const src = rssFeeds[currentCompany][type];
+      document.getElementById("rssContent").innerHTML = `<iframe src="${src}"></iframe>`;
     }
-
-    function loadRSS() {
-        const rssUrl = "https://rss.app/feeds/sE6jozOx2fA7DTJk.xml";
-        fetch(rssUrl)
-            .then(response => response.text())
-            .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
-            .then(data => {
-                const items = data.querySelectorAll("item");
-                const rssList = document.getElementById("rss-items");
-
-                for (let i = 4; i < items.length; i++) {
-                    const title = items[i].querySelector("title").textContent;
-
-                    const listItem = document.createElement("li");
-                    listItem.innerHTML = `<a href="https://www.geg.ir/%D9%BE%DB%8C%D8%B4%D9%86%D9%87%D8%A7%D8%AF_%D9%87%D8%A7?cat=Tender" target="_blank">${title}</a>`;
-                    rssList.appendChild(listItem);
-                }
-            })
-            .catch(error => console.error('Error loading RSS feed:', error));
-    }
-</script>
-
+  </script>
 </body>
 </html>
